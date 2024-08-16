@@ -1,8 +1,11 @@
 #include <iostream>
+#include "PatternMatchingMachine.h"
 
 int main() {
 
-  std::cout << "Hello World!" << std::endl;
+  PatternMatchingMachine M("ushers");
+
+  std::cout << M.x << std::endl;
 
   return 0;
 }
