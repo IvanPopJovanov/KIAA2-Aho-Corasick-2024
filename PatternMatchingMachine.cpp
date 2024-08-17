@@ -19,6 +19,11 @@ void PatternMatchingMachine::enter(const std::string &a)
     state->output.push_back(a);
 }
 
+State *PatternMatchingMachine::g(const State *state, const char &ch)
+{
+    return state->g.at(ch);
+}
+
 void PatternMatchingMachine::construct_g()
 {
     State * newstate = &(states[0]);
@@ -30,6 +35,11 @@ void PatternMatchingMachine::construct_g()
                 newstate->g[a] = newstate;
         }
     } 
+}
+
+State *PatternMatchingMachine::f(const State *state)
+{
+    return state->f;
 }
 
 void PatternMatchingMachine::construct_f()
@@ -63,6 +73,11 @@ void PatternMatchingMachine::construct_f()
         }
     }
 
+}
+
+std::vector<std::string> PatternMatchingMachine::output(const State *state)
+{
+    return state->output;
 }
 
 void PatternMatchingMachine::match()
