@@ -6,7 +6,6 @@
 struct PatternMatchingMachine {
   const std::string & x;
   const std::vector<std::string> & K;
-  PatternMatchingMachine(const std::string & x, const std::vector<std::string> & K) : x(x), K(K) {};
 
   std::vector<State> states;
   void enter(const std::string & a);
@@ -20,4 +19,9 @@ struct PatternMatchingMachine {
   std::vector<std::string> output(const State * state);
 
   void match();
+
+  PatternMatchingMachine(const std::string & x, const std::vector<std::string> & K) : x(x), K(K) {
+    construct_g();
+    construct_f();
+  };
 };

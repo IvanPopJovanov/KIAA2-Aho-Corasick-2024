@@ -3,9 +3,9 @@
 
 int main() {
 
-  PatternMatchingMachine M("ushers");
+  PatternMatchingMachine M("ushers", {"he", "she", "his", "hers"});
 
-  std::cout << M.x << std::endl;
+  M.match();
 
   return 0;
 }
