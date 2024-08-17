@@ -12,9 +12,11 @@ struct PatternMatchingMachine {
   void enter(const std::string & a);
 
   State* g(const State * state, const char & ch);
-  void init_g();
+  void construct_g();
 
   State* f(const State * state);
+  void construct_f();
+
   std::vector<std::string> output(const State * state);
 
   void match();

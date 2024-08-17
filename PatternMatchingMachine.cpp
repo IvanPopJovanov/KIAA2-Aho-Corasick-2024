@@ -1,5 +1,6 @@
 #include "PatternMatchingMachine.h"
 #include <iostream>
+#include <queue>
 
 void PatternMatchingMachine::enter(const std::string &a)
 {
@@ -18,7 +19,7 @@ void PatternMatchingMachine::enter(const std::string &a)
     state->output.push_back(a);
 }
 
-void PatternMatchingMachine::init_g()
+void PatternMatchingMachine::construct_g()
 {
     State * newstate = &(states[0]);
     int k = K.size();
@@ -29,6 +30,39 @@ void PatternMatchingMachine::init_g()
                 newstate->g[a] = newstate;
         }
     } 
+}
+
+void PatternMatchingMachine::construct_f()
+{
+    std::queue<State*> queue;
+    for (char a = 0; a < 127; ++a) {
+        State* s = g(&(states[0]), a);
+        if(s != &(states[0])) {
+            queue.push(s);
+            s->f = &(states[0]);
+        }
+    }
+    while(!queue.empty()) {
+        State* r = queue.front();
+        queue.pop();
+
+        for (char a = 0; a < 127; ++a) {
+            State* s = g(r, a);
+            if(s != FAIL) {
+                queue.push(s);
+                State* state = r->f;
+                while (g(state,a) == FAIL) {
+                    state = state->f;
+                }
+                s->f = g(state, a);
+                for (auto x : s->f->output) {
+                    s->output.push_back(x); // ovde treba unija
+                }
+                
+            }
+        }
+    }
+
 }
 
 void PatternMatchingMachine::match()
