@@ -7,4 +7,6 @@ struct State {
     std::map<char, State*> g;
     std::vector<std::string> output;
     State* f;
-} *FAIL;
+} ;
+
+extern struct State *FAIL;
