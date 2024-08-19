@@ -2,7 +2,7 @@
 #include <iostream>
 #include <queue>
 
-void PatternMatchingMachine::enter(const std::string &a)
+void PatternMatchingMachine::enter(const std::string &a, uint &newstate)
 {
     int m = a.size();
     State *state = &(states[0]);
@@ -12,9 +12,9 @@ void PatternMatchingMachine::enter(const std::string &a)
         j++;
     }
     for (int p = j; p < m; ++p) {
-        State * newstate = nullptr; // newstate = newstate + 1
-        state->g[a[p]] = newstate;
-        state = newstate;
+        newstate = newstate + 1;
+        state->g[a[p]] = &(states[newstate]);
+        state = &(states[newstate]);
     }
     state->output.push_back(a);
 }
@@ -26,13 +26,13 @@ State *PatternMatchingMachine::g(const State *state, const char &ch)
 
 void PatternMatchingMachine::construct_g()
 {
-    State * newstate = &(states[0]);
+    uint newstate = 0;
     int k = K.size();
     for (int i = 1; i < k; ++i) {
-        enter(K[i]);
+        enter(K[i], newstate);
         for (char a = 0; a < 127; ++a) {
-            if (g(newstate, a) == FAIL)
-                newstate->g[a] = newstate;
+            if (g(&(states[newstate]), a) == FAIL)
+                states[newstate].g[a] = &(states[newstate]);
         }
     } 
 }

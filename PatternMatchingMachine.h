@@ -8,7 +8,7 @@ struct PatternMatchingMachine {
   const std::vector<std::string> & K;
 
   std::vector<State> states;
-  void enter(const std::string & a);
+  void enter(const std::string & a, uint &newstate);
 
   State* g(const State * state, const char & ch);
   void construct_g();
