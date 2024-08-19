@@ -1,5 +1,5 @@
 main: main.o pmm.o state.o
-	g++ -std=c++17 -o main main.o pmm.o state.o
+	g++ -std=c++17 -o main.out main.o pmm.o state.o
 
 main.o: main.cpp PatternMatchingMachine.h State.h
 	g++ -std=c++17 -c -o main.o main.cpp
