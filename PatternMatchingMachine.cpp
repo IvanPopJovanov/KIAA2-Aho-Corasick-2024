@@ -1,6 +1,7 @@
 #include "PatternMatchingMachine.h"
 #include <iostream>
 #include <queue>
+#include <algorithm>
 
 void PatternMatchingMachine::enter(const std::string &a, uint &newstate)
 {
@@ -66,7 +67,8 @@ void PatternMatchingMachine::construct_f()
                 }
                 s->f = g(state, a);
                 for (auto x : s->f->output) {
-                    s->output.push_back(x); // ovde treba unija
+                    if(std::find(s->output.begin(), s->output.end(), x) != s->output.end())
+                    s->output.push_back(x); 
                 }
                 
             }
