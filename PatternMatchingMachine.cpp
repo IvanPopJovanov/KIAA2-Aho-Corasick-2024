@@ -7,7 +7,7 @@ void PatternMatchingMachine::enter(const std::string &a, uint &newstate)
 {
     int m = a.size();
     State *state = &(states[0]);
-    int j = 1;
+    int j = 0;
     while (g(state, a[j]) != FAIL) {
         state = g(state, a[j]);
         j++;
@@ -29,7 +29,7 @@ void PatternMatchingMachine::construct_g()
 {
     uint newstate = 0;
     int k = K.size();
-    for (int i = 1; i < k; ++i) {
+    for (int i = 0; i < k; ++i) {
         enter(K[i], newstate);
         for (char a = 0; a < 127; ++a) {
             if (g(&(states[newstate]), a) == FAIL)
