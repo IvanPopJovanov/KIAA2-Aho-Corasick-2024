@@ -3,10 +3,12 @@
 #include <map>
 #include <vector>
 
+typedef int state_id;
+
 struct State {
-    std::map<char, State*> g;
+    std::map<char, state_id> g;
     std::vector<std::string> output;
-    State* f;
+    state_id f;
 } ;
 
-extern struct State *FAIL;
+extern state_id FAIL;

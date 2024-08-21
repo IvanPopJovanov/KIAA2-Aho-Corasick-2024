@@ -1,3 +1,3 @@
 #include "State.h"
 
-struct State *FAIL;
+state_id FAIL = -1;

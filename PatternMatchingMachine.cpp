@@ -3,10 +3,10 @@
 #include <queue>
 #include <algorithm>
 
-void PatternMatchingMachine::enter(const std::string &a, uint &newstate)
+void PatternMatchingMachine::enter(const std::string & a, state_id &newstate)
 {
     int m = a.size();
-    State *state = &(states[0]);
+    state_id state = 0;
     int j = 0;
     while (g(state, a[j]) != FAIL) {
         state = g(state, a[j]);
@@ -14,61 +14,61 @@ void PatternMatchingMachine::enter(const std::string &a, uint &newstate)
     }
     for (int p = j; p < m; ++p) {
         newstate = newstate + 1;
-        state->g[a[p]] = &(states[newstate]);
-        state = &(states[newstate]);
+        states[state].g[a[p]] = newstate;
+        state = newstate;
     }
-    state->output.push_back(a);
+    states[state].output.push_back(a);
 }
 
-State *PatternMatchingMachine::g(const State *state, const char &ch)
+state_id PatternMatchingMachine::g(const state_id state, const char & ch)
 {
-    return state->g.at(ch);
+    return states[state].g.at(ch);
 }
 
 void PatternMatchingMachine::construct_g()
 {
-    uint newstate = 0;
+    state_id newstate = 0;
     int k = K.size();
     for (int i = 0; i < k; ++i) {
         enter(K[i], newstate);
-        for (char a = 0; a < 127; ++a) {
-            if (g(&(states[newstate]), a) == FAIL)
-                states[newstate].g[a] = &(states[newstate]);
-        }
     } 
+    for (char a = 0; a < 127; ++a) {
+        if (g(0, a) == FAIL)
+            states[newstate].g[a] = 0;
+    }
 }
 
-State *PatternMatchingMachine::f(const State *state)
+state_id PatternMatchingMachine::f(const state_id state)
 {
-    return state->f;
+    return states[state].f;
 }
 
 void PatternMatchingMachine::construct_f()
 {
-    std::queue<State*> queue;
+    std::queue<state_id> queue;
     for (char a = 0; a < 127; ++a) {
-        State* s = g(&(states[0]), a);
-        if(s != &(states[0])) {
+        state_id s = g(0, a);
+        if(s != 0) {
             queue.push(s);
-            s->f = &(states[0]);
+            states[s].f = 0;
         }
     }
     while(!queue.empty()) {
-        State* r = queue.front();
+        state_id r = queue.front();
         queue.pop();
 
         for (char a = 0; a < 127; ++a) {
-            State* s = g(r, a);
+            state_id s = g(r, a);
             if(s != FAIL) {
                 queue.push(s);
-                State* state = r->f;
+                state_id state = states[r].f;
                 while (g(state,a) == FAIL) {
-                    state = state->f;
+                    state = states[state].f;
                 }
-                s->f = g(state, a);
-                for (auto x : s->f->output) {
-                    if(std::find(s->output.begin(), s->output.end(), x) != s->output.end())
-                    s->output.push_back(x); 
+                states[s].f = g(state, a);
+                for (auto x : states[states[s].f].output) {
+                    if(std::find(states[s].output.begin(), states[s].output.end(), x) != states[s].output.end())
+                    states[s].output.push_back(x); 
                 }
                 
             }
@@ -77,14 +77,14 @@ void PatternMatchingMachine::construct_f()
 
 }
 
-std::vector<std::string> PatternMatchingMachine::output(const State *state)
+std::vector<std::string> PatternMatchingMachine::output(state_id state)
 {
-    return state->output;
+    return states[state].output;
 }
 
 void PatternMatchingMachine::match()
 {
-    State *state = &(states[0]);
+    state_id state = 0;
     int n = K.size();
     for(int i=0; i<n; ++i) {
         while(g(state, x[i]) == FAIL)
