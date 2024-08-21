@@ -5,7 +5,8 @@
 
 typedef int state_id;
 
-struct State {
+class State {
+public:
     std::map<char, state_id> g;
     std::vector<std::string> output;
     state_id f;

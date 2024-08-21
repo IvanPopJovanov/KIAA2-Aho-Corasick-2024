@@ -5,7 +5,7 @@
 
 #define MAX_STATES 1024
 
-struct PatternMatchingMachine {
+class PatternMatchingMachine {
   const std::string & x;
   const std::vector<std::string> & K;
 
@@ -19,6 +19,8 @@ struct PatternMatchingMachine {
   void construct_f();
 
   std::vector<std::string> output(state_id state);
+
+public:
 
   void match();
 
