@@ -34,7 +34,7 @@ void PatternMatchingMachine::construct_g()
     } 
     for (char a = 0; a < 127; ++a) {
         if (g(0, a) == FAIL)
-            states[newstate].g[a] = 0;
+            states[0].g[a] = 0;
     }
 }
 
@@ -67,7 +67,7 @@ void PatternMatchingMachine::construct_f()
                 }
                 states[s].f = g(state, a);
                 for (auto x : states[states[s].f].output) {
-                    if(std::find(states[s].output.begin(), states[s].output.end(), x) != states[s].output.end())
+                    if(std::find(states[s].output.begin(), states[s].output.end(), x) == states[s].output.end())
                     states[s].output.push_back(x); 
                 }
                 
@@ -85,7 +85,7 @@ std::vector<std::string> PatternMatchingMachine::output(state_id state)
 void PatternMatchingMachine::match()
 {
     state_id state = 0;
-    int n = K.size();
+    int n = x.size();
     for(int i=0; i<n; ++i) {
         while(g(state, x[i]) == FAIL)
             state = f(state);
