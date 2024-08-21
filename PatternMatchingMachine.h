@@ -9,7 +9,7 @@ struct PatternMatchingMachine {
   const std::string & x;
   const std::vector<std::string> & K;
 
-  std::vector<State> states = std::vector<State>(MAX_STATES, State());
+  std::vector<State> states = std::vector<State>(MAX_STATES);
   void enter(const std::string & a, state_id &newstate);
 
   state_id g(const state_id state, const char & ch);
