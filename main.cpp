@@ -5,12 +5,15 @@
 int main() {
   //TODO: What is the most correct way to calculate execution time?
 
-  printf("Apstraktna implementacija: \n");
-  PatternMatchingMachine M1("ushers", {"he", "she", "his", "hers"});
+  std::string x = "ushers";
+  std::vector<std::string> K({"he", "she", "his", "hers"});
+
+  std::cout << "Apstraktna implementacija: " << std::endl;
+  PatternMatchingMachine M1(x, K);
   M1.match();
   
-  printf("Matricna implementacija: \n");
-  PmmMatrix M2("ushers", {"he", "she", "his", "hers"});
+  std::cout << "Matricna implementacija: " <<std::endl;
+  PmmMatrix M2(x, K);
   M2.match();
 
   return 0;

@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <vector>
 #include <list>
@@ -72,9 +73,10 @@ class PmmMatrix {
           while (g[state][a] == FAIL)
             state = f[state];
           f[s] = g[state][a];
-          output[s] = true;
-          for(auto o : outputs[f[s]])
+          for(auto o : outputs[f[s]]) {
+            output[s] = true;
             outputs[s].push_back(o);
+          }
         }
       }
     }
@@ -107,10 +109,11 @@ public:
         state = f[state];
       state = g[state][x[i]];
       if(output[state]) {
-        printf("%d: ", i);
+        std::cout << i << ": ";
         for(auto o : outputs[state]) {
-          printf("%s ", o);
+          std::cout << o << " ";
         }
+        std::cout << std::endl;
       }
     }
   }
