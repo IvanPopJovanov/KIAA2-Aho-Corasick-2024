@@ -81,6 +81,8 @@ class PmmMatrix {
 
   }
 
+public:
+
   PmmMatrix(const std::string & x, const std::vector<std::string> & K) : x(x), K(K) { 
     n = x.size();
     k = K.size();
