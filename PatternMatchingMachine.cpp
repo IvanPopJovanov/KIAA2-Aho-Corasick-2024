@@ -32,7 +32,7 @@ void PatternMatchingMachine::construct_g()
     for (int i = 0; i < k; ++i) {
         enter(K[i], newstate);
     } 
-    for (char a = 0; a < 127; ++a) {
+    for (char a = 0; a < ALPHABET_SIZE; ++a) {
         if (g(0, a) == FAIL)
             states[0].g[a] = 0;
     }
@@ -46,7 +46,7 @@ state_id PatternMatchingMachine::f(const state_id state)
 void PatternMatchingMachine::construct_f()
 {
     std::queue<state_id> queue;
-    for (char a = 0; a < 127; ++a) {
+    for (char a = 0; a < ALPHABET_SIZE; ++a) {
         state_id s = g(0, a);
         if(s != 0) {
             queue.push(s);
@@ -57,7 +57,7 @@ void PatternMatchingMachine::construct_f()
         state_id r = queue.front();
         queue.pop();
 
-        for (char a = 0; a < 127; ++a) {
+        for (char a = 0; a < ALPHABET_SIZE; ++a) {
             state_id s = g(r, a);
             if(s != FAIL) {
                 queue.push(s);

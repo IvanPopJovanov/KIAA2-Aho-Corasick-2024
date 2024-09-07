@@ -4,6 +4,7 @@
 #include <vector>
 
 #define MAX_STATES 1024
+#define ALPHABET_SIZE 127
 
 class PatternMatchingMachine {
   const std::string & x;
@@ -26,7 +27,7 @@ public:
 
   PatternMatchingMachine(const std::string & x, const std::vector<std::string> & K) : x(x), K(K) {
     for(int i = 0; i < MAX_STATES; ++i) {
-      for (char a = 0; a < 127; ++a) {
+      for (char a = 0; a < ALPHABET_SIZE; ++a) {
         states[i].g.insert(std::make_pair(a, FAIL));
         states[i].f = FAIL;
       }
