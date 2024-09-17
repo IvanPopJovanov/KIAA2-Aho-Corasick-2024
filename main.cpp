@@ -3,8 +3,11 @@
 #include "PmmMatrix.h"
 #include "PmmTree.h"
 
-#define MAX_LEN_X 1e5
+#define MAX_LEN_X 1e6
 #define LEN_X_INCREMENT 1e3
+#define NUM_KEYWORDS 1e2
+#define MAX_KEYWORD_LEN 15
+#define MIN_KEYWORD_LEN 5
 
 void test(std::string x, std::vector<std::string> K, std::ofstream & out_csv) {
   clock_t start, end;
@@ -72,13 +75,16 @@ int main() {
   srand(42);
 
   std::ofstream out_csv("stats.csv");
+
+  out_csv << "text length,abstract/ms,abstract/bytes,matrix/ms,matrix/bytes,tree/ms,tree/bytes,kmp/ms,kmp/bytes" << std::endl;
+
   std::cout << "0/" << MAX_LEN_X/LEN_X_INCREMENT << std::flush;
   for(int i = 1; i <= MAX_LEN_X/LEN_X_INCREMENT; i++) {
     std::string x = random_string(i*LEN_X_INCREMENT);
     std::vector<std::string> K;
-    random_dict(100, 3, 10, K);
+    random_dict(NUM_KEYWORDS, MIN_KEYWORD_LEN, MAX_KEYWORD_LEN, K);
 
-    out_csv << i;
+    out_csv << i*LEN_X_INCREMENT;
     test(x, K, out_csv);
     out_csv << std::endl;
     std::cout << "\r" << i << "/" << MAX_LEN_X/LEN_X_INCREMENT << std::flush;
