@@ -30,6 +30,17 @@ void test(std::string x, std::vector<std::string> K) {
   end = clock();
   std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << " ms" << std::endl;
   std::cout << sizeof(M3) << " bytes" << std::endl;
+
+  std::cout << "KMP: " <<std::endl;
+  start = clock(); 
+  for(auto k : K) {
+    PmmMatrix M4(x, {k}, "output4.txt");
+    M4.match();
+  }
+  end = clock();
+  std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << " ms" << std::endl;
+  std::cout << sizeof(PmmMatrix(x, {K[0]}, "output4.txt")) << " bytes" << std::endl;
+
 }
 
 std::string random_string(const int len) {
