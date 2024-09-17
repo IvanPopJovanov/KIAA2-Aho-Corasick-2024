@@ -2,6 +2,7 @@
 #include "State.h"
 #include <string>
 #include <vector>
+#include <fstream>
 
 #define MAX_STATES 1024
 #define ALPHABET_SIZE 127
@@ -21,11 +22,15 @@ class PatternMatchingMachine {
 
   std::vector<std::string> output(state_id state);
 
+  std::ofstream out_file;
+
 public:
 
   void match();
 
-  PatternMatchingMachine(const std::string & x, const std::vector<std::string> & K) : x(x), K(K) {
+  PatternMatchingMachine(const std::string & x, const std::vector<std::string> & K, std::string out_name) : x(x), K(K) {
+    out_file.open(out_name);
+
     for(int i = 0; i < MAX_STATES; ++i) {
       for (char a = 0; a < ALPHABET_SIZE; ++a) {
         states[i].g.insert(std::make_pair(a, FAIL));

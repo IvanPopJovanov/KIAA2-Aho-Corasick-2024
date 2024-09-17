@@ -73,11 +73,11 @@ void PmmMatrix::match()
       state = f[state];
     state = g[state][x[i]];
     if(output[state]) {
-      std::cout << i << ": ";
+      out_file << i << ": ";
       for(auto o : outputs[state]) {
-        std::cout << o << " ";
+        out_file << o << " ";
       }
-      std::cout << std::endl;
+      out_file << std::endl;
     }
   }
 }

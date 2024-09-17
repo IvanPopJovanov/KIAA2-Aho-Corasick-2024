@@ -8,28 +8,28 @@ void test(std::string x, std::vector<std::string> K) {
 
   std::cout << "Apstraktna implementacija: " << std::endl;
   start = clock(); 
-  PatternMatchingMachine M1(x, K);
+  PatternMatchingMachine M1(x, K, "output1.txt");
   M1.match();
   end = clock();
-  std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << std::endl;
-  std::cout << sizeof(M1) << std::endl;
+  std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << " ms" << std::endl;
+  std::cout << sizeof(M1) << " bytes" << std::endl;
   //TODO: Change sizeof to custom allocator?
   
   std::cout << "Matricna implementacija: " <<std::endl;
   start = clock(); 
-  PmmMatrix M2(x, K);
+  PmmMatrix M2(x, K, "output2.txt");
   M2.match();
   end = clock();
-  std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << std::endl;
-  std::cout << sizeof(M2) << std::endl;
+  std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << " ms" << std::endl;
+  std::cout << sizeof(M2) << " bytes" << std::endl;
 
   std::cout << "Stablo pretrage implementacija: " <<std::endl;
   start = clock(); 
-  PmmTree M3(x, K);
+  PmmTree M3(x, K, "output3.txt");
   M3.match();
   end = clock();
-  std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << std::endl;
-  std::cout << sizeof(M3) << std::endl;
+  std::cout << double(end-start)/ CLOCKS_PER_SEC*1000 << " ms" << std::endl;
+  std::cout << sizeof(M3) << " bytes" << std::endl;
 }
 
 std::string random_string(const int len) {

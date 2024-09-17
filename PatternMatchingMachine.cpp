@@ -91,11 +91,11 @@ void PatternMatchingMachine::match()
             state = f(state);
         state = g(state, x[i]);
         if(output(state).size() > 0) {
-            std::cout << i << ": ";
+            out_file << i << ": ";
             for (auto x : output(state)) {
-                std::cout << x << " ";
+                out_file << x << " ";
             }
-            std::cout << std::endl;
+            out_file << std::endl;
         }
     }
 }

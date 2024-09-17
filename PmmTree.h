@@ -5,6 +5,7 @@
 #include <list>
 #include <queue>
 #include <map>
+#include <fstream>
 
 #define MAX_STATES 1024
 #define ALPHABET_SIZE 127 
@@ -28,10 +29,14 @@ class PmmTree {
   void construct_g();
 
   void construct_f();
+  
+  std::ofstream out_file;
 
 public:
 
-  PmmTree(const std::string & x, const std::vector<std::string> & K) : x(x), K(K) { 
+  PmmTree(const std::string & x, const std::vector<std::string> & K, std::string out_name) : x(x), K(K) { 
+    out_file.open(out_name);
+    
     n = x.size();
     k = K.size();
 
