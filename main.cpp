@@ -5,6 +5,10 @@
 
 #define MAX_LEN_X 1e6
 #define LEN_X_INCREMENT 1e3
+
+#define MAX_LEN_K 100
+#define LEN_K_INCREMENT 1
+
 #define NUM_KEYWORDS 1e2
 #define MAX_KEYWORD_LEN 15
 #define MIN_KEYWORD_LEN 5
@@ -74,9 +78,12 @@ void random_dict(const int n, const int min_len, const int max_len, std::vector<
 int main() {
   srand(42);
 
-  std::ofstream out_csv("stats.csv");
+  // MENJANJE DUZINE TEKSTA
+  std::cout << "Test 1 : MENJANJE DUZINE TEKSTA" << std::endl;
 
-  out_csv << "text length,abstract/ms,abstract/bytes,matrix/ms,matrix/bytes,tree/ms,tree/bytes,kmp/ms,kmp/bytes" << std::endl;
+  std::ofstream out_csv1("stats1.csv");
+
+  out_csv1 << "text length,abstract/ms,abstract/bytes,matrix/ms,matrix/bytes,tree/ms,tree/bytes,kmp/ms,kmp/bytes" << std::endl;
 
   std::cout << "0/" << MAX_LEN_X/LEN_X_INCREMENT << std::flush;
   for(int i = 1; i <= MAX_LEN_X/LEN_X_INCREMENT; i++) {
@@ -84,15 +91,34 @@ int main() {
     std::vector<std::string> K;
     random_dict(NUM_KEYWORDS, MIN_KEYWORD_LEN, MAX_KEYWORD_LEN, K);
 
-    out_csv << i*LEN_X_INCREMENT;
-    test(x, K, out_csv);
-    out_csv << std::endl;
+    out_csv1 << i*LEN_X_INCREMENT;
+    test(x, K, out_csv1);
+    out_csv1 << std::endl;
     std::cout << "\r" << i << "/" << MAX_LEN_X/LEN_X_INCREMENT << std::flush;
   }
 
-  // std::cout << x << std::endl;
-  // for (auto y : K)
-  //   std::cout << y << std::endl;
+  std::cout << std::endl;
+
+  // MENJANJE BROJA KLJUCNIH RECI
+  std::cout << "Test 2 : MENJANJE BROJA KLJUCNIH RECI" << std::endl;
+
+  std::ofstream out_csv2("stats2.csv");
+
+  out_csv2 << "keywords,abstract/ms,abstract/bytes,matrix/ms,matrix/bytes,tree/ms,tree/bytes,kmp/ms,kmp/bytes" << std::endl;
+
+  std::cout << "0/" << MAX_LEN_K/LEN_K_INCREMENT << std::flush;
+  for(int i = 1; i <= MAX_LEN_K/LEN_K_INCREMENT; i++) {
+    std::string x = random_string(MAX_LEN_X);
+    std::vector<std::string> K;
+    random_dict(i*LEN_K_INCREMENT, MIN_KEYWORD_LEN, MAX_KEYWORD_LEN, K);
+
+    out_csv2 << i*LEN_K_INCREMENT;
+    test(x, K, out_csv2);
+    out_csv2 << std::endl;
+    std::cout << "\r" << i << "/" << MAX_LEN_K/LEN_K_INCREMENT << std::flush;
+  }
+
+  std::cout << std::endl;
 
   return 0;
 }
